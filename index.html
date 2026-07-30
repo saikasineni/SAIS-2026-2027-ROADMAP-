@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAI'S 2026 & 2027 ROADMAP | Personal Growth Tracker</title>
+  <meta name="description" content="Personal Growth Dashboard & Tracker for GATE 2027, Data Analytics, Research, and Habit Consistency by Sai Mukesh.">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div id="app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <i data-lucide="compass"></i>
+          <div>
+            <div>SAI'S ROADMAP</div>
+            <div class="brand-subtitle">Personal Growth Tracker</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-tab="dashboard" onclick="window.app.navigateToTab('dashboard')">
+          <i data-lucide="layout-dashboard"></i> Dashboard
+        </a>
+        <a class="nav-item" data-tab="gate" onclick="window.app.navigateToTab('gate')">
+          <i data-lucide="graduation-cap"></i> GATE 2027
+        </a>
+        <a class="nav-item" data-tab="analytics" onclick="window.app.navigateToTab('analytics')">
+          <i data-lucide="bar-chart-3"></i> Data Analytics
+        </a>
+        <a class="nav-item" data-tab="research" onclick="window.app.navigateToTab('research')">
+          <i data-lucide="atom"></i> Research & Career
+        </a>
+        <a class="nav-item" data-tab="journal" onclick="window.app.navigateToTab('journal')">
+          <i data-lucide="book-open"></i> Daily Journal
+        </a>
+        <a class="nav-item" data-tab="reviews" onclick="window.app.navigateToTab('reviews')">
+          <i data-lucide="calendar"></i> Reviews
+        </a>
+        <a class="nav-item" data-tab="roadmap" onclick="window.app.navigateToTab('roadmap')">
+          <i data-lucide="map"></i> Roadmap Tracker
+        </a>
+        <a class="nav-item" data-tab="habits" onclick="window.app.navigateToTab('habits')">
+          <i data-lucide="check-square"></i> Habit Tracker
+        </a>
+        <a class="nav-item" data-tab="search" onclick="window.app.navigateToTab('search')">
+          <i data-lucide="search"></i> Search
+        </a>
+        <a class="nav-item" data-tab="settings" onclick="window.app.navigateToTab('settings')">
+          <i data-lucide="settings"></i> Settings & Backup
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span style="font-size:0.75rem; color:var(--text-muted);">Aug 2026 → Feb 2027</span>
+        <button class="btn btn-icon" onclick="window.app.toggleTheme()" title="Toggle Dark/Light Mode">
+          <i data-lucide="moon"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+      <!-- Top Bar Header -->
+      <header class="top-bar">
+        <div class="header-left">
+          <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="page-title-group">
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+          <span class="motto-banner d-none-mobile">"Small daily improvements lead to remarkable results."</span>
+        </div>
+
+        <div class="header-right">
+          <button class="btn btn-primary" onclick="window.app.openQuickAddModal()">
+            <i data-lucide="plus"></i> Quick Add Entry
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic View Container -->
+      <div id="viewContainer" class="view-container"></div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Quick Add Selection Modal -->
+  <div id="quickAddModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:700;">⚡ Select Entry Type</h3>
+        <button class="btn btn-outline" style="padding:0.25rem 0.5rem;" onclick="window.app.closeModal('quickAddModal')">✕</button>
+      </div>
+      <div class="grid-2" style="margin-top:1rem;">
+        <button class="card" style="cursor:pointer; text-align:left;" onclick="window.app.closeModal('quickAddModal'); window.app.openAddGateModal();">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">🎓</div>
+          <strong>GATE 2027 Study</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Log subject, topic, PYQs & study hours.</p>
+        </button>
+
+        <button class="card" style="cursor:pointer; text-align:left;" onclick="window.app.closeModal('quickAddModal'); window.app.openAddAnalyticsModal();">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">📈</div>
+          <strong>Data Analytics</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Log SQL, Python, Power BI & Projects.</p>
+        </button>
+
+        <button class="card" style="cursor:pointer; text-align:left;" onclick="window.app.closeModal('quickAddModal'); window.app.openAddResearchModal();">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">🔬</div>
+          <strong>Research & Career</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Log AI tools, reading & insights.</p>
+        </button>
+
+        <button class="card" style="cursor:pointer; text-align:left;" onclick="window.app.closeModal('quickAddModal'); window.app.navigateToTab('journal');">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">✍️</div>
+          <strong>Daily Journal</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Reflect on wins & productivity.</p>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GATE Logger Modal -->
+  <div id="gateModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:700;">🎓 Log GATE 2027 Study Session</h3>
+        <button class="btn btn-outline" style="padding:0.25rem 0.5rem;" onclick="window.app.closeModal('gateModal')">✕</button>
+      </div>
+      <form onsubmit="window.app.handleGateSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="gateDate" class="form-control" value="${new Date().toISOString().split('T')[0]}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Subject</label>
+            <select id="gateSubject" class="form-control" required>
+              <option value="Operating Systems">Operating Systems</option>
+              <option value="DBMS">DBMS</option>
+              <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+              <option value="Computer Networks">Computer Networks</option>
+              <option value="Digital Logic">Digital Logic</option>
+              <option value="Theory of Computation">Theory of Computation</option>
+              <option value="Compiler Design">Compiler Design</option>
+              <option value="COA">COA</option>
+              <option value="Engineering Mathematics">Engineering Mathematics</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Topic Learned</label>
+            <input type="text" id="gateTopic" class="form-control" placeholder="e.g. Process Synchronization & Semaphores" required>
+          </div>
+
+          <div class="form-group">
+            <label>Study Hours</label>
+            <input type="number" step="0.5" id="gateHours" class="form-control" value="3.0" required>
+          </div>
+
+          <div class="form-group">
+            <label>PYQs Solved</label>
+            <input type="number" id="gatePyqs" class="form-control" value="20">
+          </div>
+
+          <div class="form-group">
+            <label>Other Questions Solved</label>
+            <input type="number" id="gateQuestions" class="form-control" value="30">
+          </div>
+
+          <div class="form-group">
+            <label>Confidence (1-5 Stars)</label>
+            <input type="number" id="gateConfidence" class="form-control" min="1" max="5" value="4">
+          </div>
+
+          <div class="form-group">
+            <label>Difficulty Level</label>
+            <select id="gateDifficulty" class="form-control">
+              <option value="Easy">Easy</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select id="gateStatus" class="form-control">
+              <option value="Completed" selected>Completed</option>
+              <option value="Needs Revision">Needs Revision</option>
+              <option value="Skipped">Skipped</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-top:1.5rem;">
+            <input type="checkbox" id="gateRevision" class="habit-checkbox">
+            <label for="gateRevision">Revision Done</label>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Notes & Observations</label>
+            <textarea id="gateNotes" class="form-control" rows="2" placeholder="Key formulas or topics to review later..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1.25rem; width:100%;">Save GATE Entry</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Analytics Logger Modal -->
+  <div id="analyticsModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:700;">📈 Log Data Analytics Session</h3>
+        <button class="btn btn-outline" style="padding:0.25rem 0.5rem;" onclick="window.app.closeModal('analyticsModal')">✕</button>
+      </div>
+      <form onsubmit="window.app.handleAnalyticsSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="daDate" class="form-control" value="${new Date().toISOString().split('T')[0]}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Module</label>
+            <select id="daModule" class="form-control" required>
+              <option value="SQL">SQL</option>
+              <option value="Python for Data Analysis">Python for Data Analysis</option>
+              <option value="Power BI">Power BI</option>
+              <option value="Excel Analytics">Excel Analytics</option>
+              <option value="Statistics">Statistics</option>
+              <option value="Tableau">Tableau</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Topic Learned</label>
+            <input type="text" id="daTopic" class="form-control" placeholder="e.g. Window Functions ROW_NUMBER & DENSE_RANK" required>
+          </div>
+
+          <div class="form-group">
+            <label>Platform / Course</label>
+            <input type="text" id="daPlatform" class="form-control" placeholder="e.g. Coursera / DataCamp / YouTube">
+          </div>
+
+          <div class="form-group">
+            <label>Study Hours</label>
+            <input type="number" step="0.5" id="daHours" class="form-control" value="2.5" required>
+          </div>
+
+          <div class="form-group">
+            <label>Confidence (1-5)</label>
+            <input type="number" id="daConfidence" class="form-control" min="1" max="5" value="5">
+          </div>
+
+          <div class="form-group full-width">
+            <label>Mini Project Built (If Any)</label>
+            <input type="text" id="daProject" class="form-control" placeholder="e.g. Sales KPI Executive Dashboard">
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="daVideo" class="habit-checkbox" checked>
+            <label for="daVideo">Video Completed</label>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="daPractice" class="habit-checkbox" checked>
+            <label for="daPractice">Practice Completed</label>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Notes</label>
+            <textarea id="daNotes" class="form-control" rows="2" placeholder="Key insights or code snippet notes..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1.25rem; width:100%;">Save Analytics Entry</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Research Logger Modal -->
+  <div id="researchModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:700;">🔬 Log Research & Career Entry</h3>
+        <button class="btn btn-outline" style="padding:0.25rem 0.5rem;" onclick="window.app.closeModal('researchModal')">✕</button>
+      </div>
+      <form onsubmit="window.app.handleResearchSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="resDate" class="form-control" value="${new Date().toISOString().split('T')[0]}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Category</label>
+            <select id="resCategory" class="form-control" required>
+              <option value="Presentation Skills">Presentation Skills</option>
+              <option value="Communication">Communication</option>
+              <option value="Interview Preparation">Interview Preparation</option>
+              <option value="AI Tools">AI Tools</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Business Intelligence">Business Intelligence</option>
+              <option value="Books">Books</option>
+              <option value="Articles">Articles</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Topic</label>
+            <input type="text" id="resTopic" class="form-control" placeholder="e.g. Executive Storytelling Best Practices" required>
+          </div>
+
+          <div class="form-group">
+            <label>Time Spent (Minutes)</label>
+            <input type="number" id="resTime" class="form-control" value="45" required>
+          </div>
+
+          <div class="form-group">
+            <label>Source / Link</label>
+            <input type="text" id="resSource" class="form-control" placeholder="e.g. Harvard Business Review">
+          </div>
+
+          <div class="form-group full-width">
+            <label>Key Learnings</label>
+            <textarea id="resLearnings" class="form-control" rows="2" placeholder="Primary takeaways..." required></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Action Items</label>
+            <textarea id="resActions" class="form-control" rows="2" placeholder="How to apply this tomorrow..."></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Useful Links</label>
+            <input type="url" id="resLinks" class="form-control" placeholder="https://...">
+          </div>
+
+          <div class="form-group full-width">
+            <label>Notes</label>
+            <textarea id="resNotes" class="form-control" rows="2" placeholder="Additional thoughts..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1.25rem; width:100%;">Save Research Entry</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="sampleData.js" defer></script>
+  <script src="store.js" defer></script>
+  <script src="charts.js" defer></script>
+  <script src="views.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
